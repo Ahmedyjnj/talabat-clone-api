@@ -1,0 +1,70 @@
+﻿// the first session all information of it is deleteed should return to it 
+// api is stand for application programming interface
+// end point is a url that represent a function or a resource in api
+//types of api: restful api -- we will use it in this course
+, soap api, graphql api -- is anew api
+
+//restful api is good at seperate post get others by know we can write all of them 
+
+//restful api download in cash
+
+// a soap api using a xml format it slower due to the size of the xml file used in legacy system
+// a graphql api is a new api that is not widely used yet it used in real time applications
+// has cons that is complex expensive to execute some queries
+
+
+//////////////////////////////////////////////////////////////////////////
+
+in mvc we work with three tier architecture
+
+now in api we will work with onion architecture that is more big to add more
+like payments , filterations 
+
+
+// in onion layer
+ // 1. core layer -->> Domain layer  that have models[classes represent table in database]
+   //that have core of project not implemented [Repo Interface ] this basic that in center 
+   // have interfaces that represent the repo and exceptions 
+
+
+
+//2- services layer (M) -->> that have services that implement the repo interface 
+    //service implementation
+    //service abstraction [not dealing direct with domain]
+    //like attachments 
+  
+
+//3-Persistance
+   //Dbcontext
+   //configurations
+   //core of prject implementation [Repo implementaion ]
+   //cashing
+
+
+
+   ////////presentation Api controllers  ==> shared [Dtos} will be here with this two 
+   //////// wep application[Api]
+
+     // as this we isolate application api from others api in project to prevent spaghtti code 
+
+
+//WE WILL USE DTOS IN SERVICE ABSTRACION 
+
+
+//////////WEP APPLICATION API //////////
+  //PERSITANCE                 //PRESENTATION
+   //SERVICE IMPLEMENTATION          //SERVICE ABSTRACTION 
+       //dOMAIN                        //DTOS
+
+
+
+// benefits of union logic architecture \\
+
+////Domain logic stays clean and untouchable by framecorek
+
+// we will make framework in persistance
+
+// we have scalapility add features without rewrite core
+
+
+

@@ -1,0 +1,166 @@
+// we will make folder Core
+// make class library Abstraction Domain Services 
+//Services should see abstraction and Domain 
+
+
+
+// make folder infrastracture
+//make class library Persistance
+//persistance will see services
+
+//make class library Presentation
+//presentation will see Abstraction
+
+
+//make shared class library in out of all folders in solution 
+
+//absraction will see shared
+
+
+/////////////////////////////////////////////////video 4 
+
+
+
+
+
+{{ product module }}
+
+[product ] --int id - string name - string deskription - string picture url - decimal price
+
+[Product Brand ]     Int Id -  String Name
+
+[product Type ]  int Id - string name
+
+
+
+
+product Module 
+
+[product]M ---------------------has----------------1[Brand]
+
+
+[product]M ---------------------has-----------------1[Type]
+
+
+
+
+// in Persistance --Data -- Configurations ,Migrations , Seeds ,StoreDBContext
+
+
+// we will install in persistance  Entity framwork.sqlserver
+
+
+
+
+
+//we will make application see a persistance and presentaion
+
+
+// a position of connection string is in appsettings.json Ecommerce wep
+  //so we will download tool in it
+
+
+
+
+  //in using and build of end point we need dumi data 
+
+  //we now will take the 4 json dumi data and put it into seeds
+
+
+  //we should make this jsons as objects to put it into contexts
+   //we will make a in domain a folder of contracts and in it make interface IdbIntializer
+
+
+   //in Data make class DBInializer
+
+
+
+
+
+
+///////////////////////////////////////////////////////////settion2/////////////////
+
+//generic repository
+//now we will complete my context to make a crud operations to a dbase
+//develop with interface not a concreate class
+
+//domain has contracts of dbase and implement of it is in persistance -
+abstraction for services and have implement in presentaion
+
+// implementation of abstraction is in services
+
+
+
+//////////////////////////////////////
+we use service manager to organize injection in controller and encapsulate
+
+
+
+
+
+
+
+now in 6 video we will solve a problem of url path for photo
+
+we should appling middlewares that talk with a files
+
+//we need to add auto base to url
+we will convert it in mapping by product dto 
+
+
+
+
+
+
+////////////////////////////////////////////////////specifications to include where another linq
+
+//we will use eaager loading because its only one brand and type in a product 
+//we will make a query dynamic by specification design pattern 
+
+
+1-entry point context.products (start of query)
+
+
+
+
+2- where(p=>p.Id==id)  -where condition criteria {Get}  -> this a lambada expression 
+we will store it in class expression 
+Expression<Func<Product, bool>>  where = p=>p.Id==id   Func ,predicate,action :  func,predicate =bool
+
+
+
+
+
+
+
+
+
+
+
+
+
+3- include(p=>p.ProductType).include(p=>p.ProductBrand)  --list of includes 
+
+list of expression  list<Expression<Func<Product, object>>>
+
+
+
+
+// we will make a class of specification and in it we will make a method to get the query
+make it in domain because it a query to database
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
