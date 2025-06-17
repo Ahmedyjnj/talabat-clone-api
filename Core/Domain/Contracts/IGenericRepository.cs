@@ -22,6 +22,10 @@ namespace Domain.Contracts
 
         // we will make add and update and delete as void it not save or work async
 
+        Task<int> CountAsync(ISpecifications<TEntity, Tkey> spec);
+
+
+
         void Add(TEntity entity);
 
         void Update(TEntity entity);

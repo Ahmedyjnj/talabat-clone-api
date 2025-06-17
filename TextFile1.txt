@@ -154,13 +154,34 @@ make it in domain because it a query to database
 
 
 
+//////////////////////////////////////////////////////////session3/////////
+
+//we now will make filteration to product by type and brand  and by two &&
+// in product with prand an d type specification we will handle in inside sped a id
+
+
+//when controllers see parameter in action he search in segments ,query string , file ,or html form 
+
+
+//he work by pass from controller to service and then to specificationspecific
+
+//this make a values of base specification and then we will pass it to repository
+
+//then repository make a query by specicationEvaluator in create query
+
+
+//we have a many and complex parameters in product we need to pass it from controller to specification in sirect
+//so we will make complex parameter as query parameter in get to have all these inputs in it
 
 
 
+///////////////////////////////////////////////////session 5//////////////
 
+pagination is a technique to breaking large records into partions called pages 
 
+//we dont need to load all data in one time to not make a problem
 
+// that will be with page size separate a collection to groubs of 10
+and page index give me group 6 that will give five numbers 54 55
 
-
-
-
+// there are partioning operator in linq called skip : size and take : index 

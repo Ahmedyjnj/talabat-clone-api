@@ -22,6 +22,16 @@ namespace Persistance
                 query = query.Where(spec.Criteria);
             }
 
+            if(spec.OrderBy != null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+            else if (spec.OrderByDesc != null)
+            {
+                query = query.OrderByDescending(spec.OrderByDesc);
+            }
+
+
             if (spec.IncludeExpressions is not null && spec.IncludeExpressions.Count>0)
             {//he will use aggregate that add in seqance
                 //route academy
@@ -30,6 +40,11 @@ namespace Persistance
 
                 query = spec.IncludeExpressions.Aggregate(query,(currentquery,exp)=>currentquery.Include(exp));
                 
+            }
+
+            if (spec.IsPaginated == true)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
             }
 
             return query;

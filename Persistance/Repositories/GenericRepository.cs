@@ -24,7 +24,7 @@ namespace Persistance.Repositories
         public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity, Tkey> spec)
         {
             //we need to make class to build query as order 
-
+            //we need to make order before include
 
             return await SpecificationEvaluator.CreateQuery(context.Set<TEntity>() , spec).ToListAsync();
 
@@ -50,7 +50,13 @@ namespace Persistance.Repositories
         public void Update(TEntity entity)
         => context.Set<TEntity>().Update(entity);
 
-      
+        public async Task<int> CountAsync(ISpecifications<TEntity, Tkey> spec)
+        
+           => await SpecificationEvaluator.CreateQuery(context.Set<TEntity>(), spec).CountAsync();        
+
+
+
+
 
 
 

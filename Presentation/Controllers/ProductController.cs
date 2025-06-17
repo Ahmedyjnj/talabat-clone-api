@@ -1,5 +1,6 @@
 ﻿using Abstraction;
 using Microsoft.AspNetCore.Mvc;
+using Shared;
 using Shared.Dto_s;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,15 @@ namespace Presentation.Controllers
     [Route("api/[controller]")]
     public class ProductController(IServiceManager serviceManager) : ControllerBase
     {
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
+
+
+        //but we have a problem that a in pass of string we easy to make enum rather than string
+
+
+        [HttpGet]  // we will pass parameters in get that is type of query string pass
+        public async Task<ActionResult<PaginatedResult<ProductDto>>> GetAllProducts([FromQuery]ProductQueryParams productQuery)
         {
-            var products = await serviceManager.ProductServices.GetAllProductsAsync();
+            var products = await serviceManager.ProductServices.GetAllProductsAsync(productQuery);
 
             return Ok(products);//status 200
 
@@ -67,7 +73,7 @@ namespace Presentation.Controllers
         }
 
 
-
+        
 
 
 
