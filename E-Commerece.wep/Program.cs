@@ -1,10 +1,16 @@
 
 using Abstraction;
 using Domain.Contracts;
+using E_Commerece.wep.CustomMiddlewares;
+using Microsoft.AspNetCore.Connections;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Persistance.Data;
 using Persistance.Repositories;
 using Services;
+using Shared.ErrorModels;
+using StackExchange.Redis;
 using System.Threading.Tasks;
 
 namespace E_CommereceWep
@@ -23,6 +29,51 @@ namespace E_CommereceWep
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+
+            builder.Services.Configure<ApiBehaviorOptions>(Options =>
+
+            {
+                Options.InvalidModelStateResponseFactory = (Context) =>
+                {
+                    var errors = Context.ModelState
+                        .Where(e => e.Value.Errors.Any())
+                        .Select(e => new ValidationError()
+                        {
+                            Field = e.Key,
+                            Errors = e.Value.Errors.Select(x => x.ErrorMessage)
+                        });
+
+                    var Response = new ValidationErrorToReturn
+                    {
+                       ValidationErrors = errors
+
+                    };
+
+                    return new BadRequestObjectResult(Response);
+
+                };
+            }
+
+
+            );
+
+
+
+            //add scoped is for only request
+            // add singlton is for all request in application life time
+
+            builder.Services.AddSingleton<IConnectionMultiplexer>((_) =>
+            {
+                return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection"));
+           
+            
+            });
+
+
+
+
+
             //to anderstand that we need to make mapper in assemply of a service we will make 
             // File assemplyreference  class and pass to it
 
@@ -40,6 +91,8 @@ namespace E_CommereceWep
 
             });
 
+
+
             builder.Services.AddScoped<IDbInializer,DbInializer>(); 
             //«·„‘ﬂ·… „Õœ‘ ÂÌÿ·»Â« ›Â‰ Õ«Ì· 
             
@@ -56,6 +109,9 @@ namespace E_CommereceWep
             await InitializeDbAsync(app);
 
             #region MiddleWares -configure pipelines
+
+
+            app.UseMiddleware<CustomExceptionMiddleware>(); //this is custom middleware to handle exceptions
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

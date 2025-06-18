@@ -185,3 +185,66 @@ pagination is a technique to breaking large records into partions called pages
 and page index give me group 6 that will give five numbers 54 55
 
 // there are partioning operator in linq called skip : size and take : index 
+
+
+///////////////////////////////////////////////session4////////////////////////////
+
+//we will handle exceptions off user and api json 
+usaully errors come in response like blanc or somthing we need to make it oncable and understandable
+//we in video of name custom Exception Middleware
+
+404 not found for end point
+201 not found product out of range we have only 18 product 
+500 internal server error the content is text we should make it as json
+400 bad request validation error like we need int client send string 
+//that 400 will go with json from api model state in controller 
+
+//we now make one shape for all these errors
+
+
+// request first go in pipelines in middlewares 
+
+to make middle ware we should make it as cluss that have in constructor parameter of requestDelegete
+request delegete refer to next middlewares
+
+and public method named invoke , invokeAsync this method must return task and accept parameter in it as httpcontext
+
+httpcontext refer to a current request 
+
+
+
+
+
+
+///////////////////////////////////////////////////session 5 6/////////////////////
+//provide businesses wtith too ls to customers manage its orders in basket
+
+basket module Endpoint   create basket , update basket , delete basket , get basket by id
+
+basket modules and Entites
+
+Customer Basket : string Id  Icollection <BasketItem> Items
+
+Basket Item : string Id - int Quantity  - string Name - decimal Price - string PictureUrl
+
+
+we will use redis as stor so we will make entites in domain 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
