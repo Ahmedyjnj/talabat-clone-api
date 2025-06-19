@@ -15,9 +15,8 @@ namespace Presentation.Controllers
 
     //we need to specify type so we will work with actionresult
 
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductController(IServiceManager serviceManager) : ControllerBase
+   
+    public class ProductController(IServiceManager serviceManager) : ApiBaseController
     {
 
 

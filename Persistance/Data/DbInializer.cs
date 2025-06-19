@@ -1,5 +1,8 @@
 ﻿using Domain.Contracts;
+using Domain.Models.Identity;
 using Domain.Models.Products;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,8 +13,59 @@ using System.Threading.Tasks;
 
 namespace Persistance.Data
 {
-    public class DbInializer(StoreDBContext context) : IDbInializer
+    public class DbInializer(StoreDBContext context,UserManager<ApplicationUser> userManager,RoleManager<IdentityRole> roleManager,StoreIdentityDbContext identityDbContext ) : IDbInializer
     {
+        public async Task IdentityInializeAsync()
+        {
+            try { 
+            if (! roleManager.Roles.Any())
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+                await roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+
+            }
+
+            if(!userManager.Users.Any())
+            {
+                var User1 = new ApplicationUser()
+                {
+                    Email="Ahmed@gmail.com",
+                    UserName = "AhmedNasser",
+                    DisplayName = "Ahmed Nasser",
+                    PhoneNumber = "01112643021",
+
+                };
+
+                var User2 = new ApplicationUser()
+                {
+                    Email ="Yassmine@gmail.com",
+                    UserName = "YassmineNasser",
+                    DisplayName = "Yassmine Nasser",
+                    PhoneNumber = "01112643022",
+                };
+
+                await userManager .CreateAsync(User1,"P@ssw0rd");
+                await userManager.CreateAsync(User2, "P@ssw0rd");
+
+                await userManager.AddToRoleAsync(User1, "Admin");
+
+                await userManager.AddToRoleAsync(User2, "SuperAdmin"); 
+
+                // we can add user to multiple roles
+
+                await identityDbContext.SaveChangesAsync(); // this will save the changes in identity db context
+            }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+
+
+
+
+        }
+
         //we will convert files into objects then make save by context
 
         //we should begin in insert with table that dont have forign key 

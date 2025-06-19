@@ -1,8 +1,10 @@
 
 using Abstraction;
 using Domain.Contracts;
+using Domain.Models.Identity;
 using E_Commerece.wep.CustomMiddlewares;
 using Microsoft.AspNetCore.Connections;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -65,13 +67,15 @@ namespace E_CommereceWep
 
             builder.Services.AddSingleton<IConnectionMultiplexer>((_) =>
             {
-                return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection"));
+                return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnectionString"));
            
             
             });
 
 
-
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<StoreIdentityDbContext>();
+               //œÂ »Ì÷Ì› «·ÂÊÌ… Ê»Ì—»ÿ »«·œ« « »Ì“
 
 
             //to anderstand that we need to make mapper in assemply of a service we will make 
@@ -93,12 +97,25 @@ namespace E_CommereceWep
 
 
 
+
+            builder.Services.AddDbContext<StoreIdentityDbContext>(options =>
+            {
+                var ConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+
+                options.UseSqlServer(ConnectionString);
+
+            });
+
+
             builder.Services.AddScoped<IDbInializer,DbInializer>(); 
             //«·„‘ﬂ·… „Õœ‘ ÂÌÿ·»Â« ›Â‰ Õ«Ì· 
             
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
 
             builder.Services.AddScoped<IServiceManager, ServicesManager>();
+
+            builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+
 
             #endregion
 
@@ -124,6 +141,11 @@ namespace E_CommereceWep
 
             app.UseAuthorization();
 
+            //that to use identity  //we should add middleware of identity
+            app.UseAuthentication();
+            app.UseRouting();
+
+
             app.UseStaticFiles();
 
             app.MapControllers();
@@ -148,7 +170,7 @@ namespace E_CommereceWep
 
             var dbInializer = scope.ServiceProvider.GetRequiredService<IDbInializer>();
             await  dbInializer.InializeAsync();
-
+            await dbInializer.IdentityInializeAsync();
         }
     }
 }

@@ -11,6 +11,16 @@ namespace Abstraction
 
 
         IProductServices ProductServices { get; }
-       
+
+        IBasketServices BasketServices { get; }
+
+
+
+        IAuthenticationServices AuthenticationServices { get; }
+
+
+
+
+
     }
 }

@@ -240,11 +240,37 @@ we will use redis as stor so we will make entites in domain
 
 
 
+///////////////////////////////////////////////////session 5  video 3///////////////////////
+//we will make tokens in api rather than mvc
+
+//tokens in mvc will be in cockiees
+
+Identity Modules
+
+p{USER MANAGER<T>} handle user related operations like create user , update user , delete user ,find user by id , find user by email
+, find user by user -name ,id  ,email 
+
+{Role Manager<T>} handle role related operations like create role , update role , delete role , find role by id , find role by 
+
+Add claims 
+change password  generate password token
+
+
+{SIGN IN MANAGER<T>} handle sign in related operations like sign in user ,sign out user ,sign in with password ,sign in with token
+
+two factor authentication
 
 
 
+ROLE MANAGER<T> handle role related operations like create role , update role , delete role , find role by id , find role by name
 
 
+end poiunts ::: login then return token with Email Display name
 
+, register  will take email password user name Display name phone number
+return Token email Display name
 
+ get current user adress ,update current user address
 
+,check email , get current user , get user by id , get user by email ,
+,get current user 

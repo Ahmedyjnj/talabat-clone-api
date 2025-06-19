@@ -1,4 +1,5 @@
-﻿using Domain.Exceptions;
+﻿using Azure;
+using Domain.Exceptions;
 using Microsoft.Extensions.Logging;
 using Shared.ErrorModels;
 using System.Text.Json;
@@ -45,10 +46,19 @@ namespace E_Commerece.wep.CustomMiddlewares
             {
                 logger.LogError(ex, "something wrong"); //error models
 
+                var response = new ErrorToReturn
+                {
+                   
+                    ErrorMessage = ex.Message
+                   
+                };
 
-                httpContext.Response.StatusCode =ex switch
+
+                response.StatusCode =ex switch
                 {
                     NotFoundException => StatusCodes.Status404NotFound,
+                    UnauthorizedException=>StatusCodes.Status401Unauthorized,
+                    BadRequestException badRequestException => GetBadRequestErrors(badRequestException,response),
                     _ => StatusCodes.Status500InternalServerError
                 };
                 httpContext.Response.ContentType = "application/json";
@@ -56,11 +66,7 @@ namespace E_Commerece.wep.CustomMiddlewares
 
                 //response object as json 
 
-                var response = new ErrorToReturn
-                {
-                    StatusCode = httpContext.Response.StatusCode,
-                    ErrorMessage = ex.Message
-                };
+               
 
 
                 var ResponseToReturn = JsonSerializer.Serialize(response);
@@ -78,6 +84,12 @@ namespace E_Commerece.wep.CustomMiddlewares
             }
 
 
+        }
+
+        private static int GetBadRequestErrors(BadRequestException badRequestException,ErrorToReturn response)
+        {
+            response.Errors = badRequestException.Errors;
+            return StatusCodes.Status400BadRequest;
         }
 
         // this as normal will only handle a internal server error 

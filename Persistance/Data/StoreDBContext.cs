@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Persistance.Data
 {
-    public class StoreDBContext(DbContextOptions options) :DbContext(options)
+    public class StoreDBContext(DbContextOptions<StoreDBContext> options) :DbContext(options)
     {
 
         //public StoreDBContext(DbContextOptions<StoreDBContext> options) : base(options)
