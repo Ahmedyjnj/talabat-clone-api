@@ -1,5 +1,6 @@
 ﻿using Domain.Contracts;
 using Domain.Models.Identity;
+using Domain.Models.Orders;
 using Domain.Models.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -138,6 +139,42 @@ namespace Persistance.Data
 
 
                 }
+
+
+
+
+                if (!context.Set<DeliveryMethod>().Any())
+                {
+                    var data = await File.ReadAllTextAsync(@"..\Persistance\Data\Seeds\delivery.json");
+
+                    var objects = JsonSerializer.Deserialize<List<DeliveryMethod>>(data); //دى هتفكك الملف الى قائمة 
+
+                    if (objects is not null && objects.Any())
+                    {
+                        //context.Set<Product>().AddRange(objects); //دى هتضيف العناصر الى الجدول
+                        //await context.SaveChangesAsync(); //دى هتعمل حفظ للبيانات
+
+                        foreach (var delivery in objects)
+                        {
+                            // 1) Add the single product
+                            context.Set<DeliveryMethod>().Add(delivery);
+
+                            // 2) Save immediately
+                            await context.SaveChangesAsync();
+                        }
+
+                    }
+
+
+                }
+
+
+
+
+
+
+
+
 
 
             }

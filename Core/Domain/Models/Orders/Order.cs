@@ -9,13 +9,28 @@ namespace Domain.Models.Orders
 {
     public class Order :ModelBase<Guid>
     {
-        public string UserEmail { get; set; } = default;
+        public Order()
+        {
+            
+        }
+        public Order(string userEmail, decimal subTotal, ICollection<OrderItem> items, OrderAddress shipToAddress, DeliveryMethod deliveryMethod)
+        {
+            UserEmail = userEmail;
+            SubTotal = subTotal;
+            Items = items;
+            ShipToAddress = shipToAddress;
+            DeliveryMethod = deliveryMethod;
+        }
 
-        public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
+        public string UserEmail { get; set; } = default!;
 
-        public OrderAddress ShipToAddress { get; set; } = default;
+        public decimal SubTotal { get; set; }
 
-        public DeliveryMethod DeliveryMethod { get; set; } = default;
+        public ICollection<OrderItem> Items { get; set; } = [];
+
+        public OrderAddress ShipToAddress { get; set; } = default!;
+
+        public DeliveryMethod DeliveryMethod { get; set; } = default!;
 
         [ForeignKey("DeliveryMethod")] //we will make relations in configuration
         public int DeliveryMethodId { get; set; }
@@ -23,11 +38,9 @@ namespace Domain.Models.Orders
 
         public OrderStatuses orderStatuses { get; set; } = OrderStatuses.Pending;
 
-        public ICollection<OrderItem> Items { get; set; } = [];
-
-
-        public decimal SubTotal { get;set; }
-
+       
+        public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
+      
         //we will make total as drived attribute
 
         public decimal GetTotal() =>SubTotal+DeliveryMethod.Price;

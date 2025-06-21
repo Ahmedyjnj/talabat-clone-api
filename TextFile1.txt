@@ -336,8 +336,13 @@ that will used in api with jwt
 
 
 
+  ///////////////////////////////we are in finnal session 7 to implement order
 
+  //order service create order will take 
+  //basketid, shipping address , Delivery method Id , customer email 
+  return order details (ID, username ,orderdate,items(productname_pictur url _ price_quatity))
 
+  return Adress ,delivery method name order status , sub total , total 
 
 
 

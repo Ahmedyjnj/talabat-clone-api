@@ -42,5 +42,13 @@ namespace Services
         public IAuthenticationServices AuthenticationServices => authentication.Value;
 
 
+
+
+        private readonly Lazy<IOrderServices> OrderServices = new Lazy<IOrderServices>(() => new OrderServices(mapper, basketRepository, unitOfWork));
+
+
+        
+
+        public IOrderServices orderServices => OrderServices.Value;
     }
 }
