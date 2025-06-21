@@ -19,6 +19,21 @@ namespace Abstraction
 
         Task<UserDto> RegisterAsync(RegisterDto registerDto);
 
+        //check email 
+        //take string email || return true or false
+        Task<bool> CheckEmailAsync(string email);
 
+
+        //Get current user Adress
+        // take string email || return UserDto Adress dto
+        Task<AddressDto> GetCurrentUserAddressAsync(string email);
+
+        //update aadress of current user
+        //take AddressDto ,email and return updated adress 
+        Task<AddressDto> UpdateCurrentUserAddressAsync(string Email,AddressDto addressDto);
+
+        //get current address
+        //take string email return userdto
+        Task<UserDto> GetCurrentUserAsync(string email);
     }
 }

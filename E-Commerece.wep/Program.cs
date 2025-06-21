@@ -3,16 +3,19 @@ using Abstraction;
 using Domain.Contracts;
 using Domain.Models.Identity;
 using E_Commerece.wep.CustomMiddlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Persistance.Data;
 using Persistance.Repositories;
 using Services;
 using Shared.ErrorModels;
 using StackExchange.Redis;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace E_CommereceWep
@@ -31,6 +34,7 @@ namespace E_CommereceWep
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            
 
 
             builder.Services.Configure<ApiBehaviorOptions>(Options =>
@@ -117,6 +121,25 @@ namespace E_CommereceWep
             builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 
+            //we should connect between jwt with token and [authorize] with schema
+
+            builder.Services.AddAuthentication(config=>{
+
+                config.DefaultAuthenticateScheme =JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(Options =>
+            {
+                Options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = builder.Configuration["JwtOptions:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = builder.Configuration["JwtOptions:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtOptions:SecretKey"])),
+                };
+              
+            });
+
             #endregion
 
 
@@ -139,11 +162,12 @@ namespace E_CommereceWep
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
 
+            app.UseRouting();
             //that to use identity  //we should add middleware of identity
             app.UseAuthentication();
-            app.UseRouting();
+            app.UseAuthorization();
+           
 
 
             app.UseStaticFiles();

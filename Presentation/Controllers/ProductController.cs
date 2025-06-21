@@ -1,4 +1,5 @@
 ﻿using Abstraction;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
 using Shared.Dto_s;
@@ -33,7 +34,7 @@ namespace Presentation.Controllers
 
         }
 
-
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet("brands")]
         //this segment to prevent conflict of two get methods
         //api/product/brands
@@ -46,7 +47,7 @@ namespace Presentation.Controllers
 
 
 
-
+        [Authorize(Roles ="SuperAdmin")]
         [HttpGet("Types")]
        
         public async Task<ActionResult<IEnumerable<TypeDto>>> GetAllTypes()

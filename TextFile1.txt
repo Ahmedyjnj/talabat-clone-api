@@ -274,3 +274,90 @@ return Token email Display name
 
 ,check email , get current user , get user by id , get user by email ,
 ,get current user 
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////we reach to session6 video 1 we will
+jenerate token with jwt
+// all acommunication should be with token should authorization
+//the factory of identity mvc that is responsible for make token 
+       jwt json wep token  it has more than algorithm HMAC
+//we have signed token that  show the claims
+    and encrypted token  that hide the claims
+
+//we will use HMACSHA256 algorithm to sign the token
+//we will use Bearer token in header of request that make authentication  
+that will used in api with jwt 
+
+// the structure of token is header.payload.signature of jwt 
+ /header is json object that contain the algorithm and type of token
+ // payload is json object that contain the claims of token like user id , email , role
+ // signature is the hash of header and payload with secret key
+
+ /////////////////////////////////////////////order///////////
+
+ //we will make order module that handle orders for customers
+ // it will capture information of delivery to managing payment to delivery status
+
+ //End point 
+  1-create order
+  2-get delivery methods
+  3-get order for user
+  4-get orders all for user 
+
+  //order complex object agrregate
+  1-order status  2-shipping Adress 3-Delivery Method 4-Order Items
+
+  order status has 1-pending 2-payment recived 3- payment failed 
+
+  shipping adress has 1- street 2-city 3-country 5-first name 4-last name 
+
+  Items orders id ,peoduct item orderd : productId,productname,picture url  ,price ,quantity
+
+  order
+  user email
+  order date
+  status
+  shipping address()
+  delivery method
+  order items : productId,productname,picture url  ,price ,quantity
+  sub total
+  total
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

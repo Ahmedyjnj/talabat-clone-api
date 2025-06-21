@@ -20,5 +20,7 @@ namespace Shared.Dto_s.IdentityDto_s
         public string DisplayName { get; set; } = null!;
 
         public string PhoneNumber { get; set; } = null!;
+
+        public string Role { get; set; } = null!;
     }
 }
